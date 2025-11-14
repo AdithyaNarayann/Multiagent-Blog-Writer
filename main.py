@@ -34,6 +34,7 @@ outline_agent = Agent(
     output_key="blog_outline",  
 )
 
+
 writer_agent = Agent(
     name="WriterAgent",
     model=Gemini(
