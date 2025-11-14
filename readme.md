@@ -1,45 +1,117 @@
-# Auto Blog Writer
+# 📝 Multiagent Blog Writer
 
-A small experiment showing how multiple agents work together to reduce LLM hallucination and produce higher-quality outputs by splitting responsibilities (outline → draft → edit).
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Google Gemini API](https://img.shields.io/badge/powered_by-Google_Gemini-orange)](https://ai.google.dev/)
 
-## Project structure
-- `main.py` — pipeline implementation and entrypoint (`async def main()`).
-- `requirements.txt` — Python dependencies.
-- `.env` — environment variables (store API_KEY here).
-- `.gitignore`, `LICENSE` — project housekeeping.
+> **Intelligent multi-agent blog content generation** — Reduce hallucination and improve output quality by splitting the writing process across specialized agents.
 
-## Overview
-This project composes multiple specialized agents:
-- `outline_agent` — creates a structured outline (headline, intro hook, 3–5 sections with bullets).
-- `writer_agent` — consumes the outline and produces a 200–300 word draft.
-- `editor_agent` — polishes the draft to fix grammar and improve flow.
-- `root_agent` — runs agents in sequence for end-to-end output.
-- `runner` — executes the pipeline and includes debug/run helpers.
+## 🎯 What is this?
 
-Separating responsibilities reduces hallucination by constraining each agent's task and allowing validation between steps.
+This project demonstrates how **multiple AI agents can work together** to produce higher-quality blog posts. By dividing the writing task into discrete steps (outline → draft → edit), each agent focuses on a specific responsibility, reducing errors and hallucinations.
 
-## Requirements
-- Python 3.10+
-- API key for the model service (add to `.env` as `API_KEY=your_key_here`).
+```
+Topic Input → Outline Agent → Writer Agent → Editor Agent → Polished Blog Post
+```
 
-## Setup (Windows)
-1. Create and activate a virtual environment:
-   - python -m venv .venv
-   - .venv\Scripts\activate
-2. Install dependencies:
-   - pip install -r requirements.txt
-3. Add your API key to `.env`:
-   - API_KEY=...
+## ✨ Key Features
 
-## Run
-- Start the interactive CLI:
-  - python main.py
-- Enter a blog topic when prompted; enter `exit` to quit.
+- 🤖 **Multi-Agent Pipeline** — Specialized agents for different writing stages
+- 🎯 **Reduced Hallucination** — Task separation and validation between steps
+- ⚡ **Async Processing** — Fast, concurrent execution using Google Gemini API
+- 🔧 **Configurable** — Easy to adjust models, retry logic, and prompts
+- 💬 **Interactive CLI** — Simple command-line interface for generating blog posts
 
-## Notes & tips
-- Adjust model selection and retry parameters in `main.py`.
-- Use the provided `run_debug`/runner helpers to trace intermediate outputs.
-- Do not commit `.env` (it's ignored by `.gitignore`).
+## 🏗️ Architecture
 
-## License
-MIT — see `LICENSE`.
+| Agent | Responsibility |
+|-------|-----------------|
+| **Outline Agent** | Creates structured outlines (headline, intro, 3-5 sections with bullets) |
+| **Writer Agent** | Drafts 200-300 word blog posts from outlines |
+| **Editor Agent** | Polishes drafts for grammar, flow, and readability |
+| **Root Agent** | Orchestrates the full pipeline end-to-end |
+| **Runner** | Executes the pipeline with debug capabilities |
+
+## 📋 Project Structure
+
+```
+multiagent-blog-writer/
+├── main.py                 # Pipeline & entrypoint (async def main())
+├── requirements.txt        # Python dependencies
+├── .env                    # Environment variables (add API_KEY here)
+├── .gitignore             # Git exclusions
+├── LICENSE                # MIT License
+└── README.md              # This file
+```
+
+## 🛠️ Requirements
+
+- **Python 3.10+**
+- **Google Gemini API Key** ([Get one here](https://ai.google.dev/))
+
+## 🚀 Quick Start
+
+### 1️⃣ Setup (Windows)
+
+```powershell
+# Create virtual environment
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2️⃣ Configure
+
+Create a `.env` file in the project root:
+
+```env
+API_KEY=your_gemini_api_key_here
+```
+
+> ⚠️ **Never commit `.env` to version control** — it's already in `.gitignore`
+
+### 3️⃣ Run
+
+```powershell
+python main.py
+```
+
+Enter a blog topic when prompted. Type `exit` to quit.
+
+**Example:**
+```
+Enter blog topic: The Future of AI in Education
+→ Generates outline → draft → polished blog post
+```
+
+## 🔧 Customization
+
+**In `main.py`, you can:**
+
+- 🤖 Change model: `model="gemini-2.5-flash-lite"` → other Gemini models
+- 🔄 Adjust retry logic: Modify `retry_config` settings
+- ✏️ Customize agent instructions: Edit `instruction` parameters
+- 📊 Trace intermediate outputs: Use `run_debug`/runner helpers
+
+## 📚 How It Works
+
+1. **Outline** — Agent generates a structured outline based on the topic
+2. **Draft** — Writer creates a 200-300 word post following the outline
+3. **Edit** — Editor refines for grammar, flow, and quality
+4. **Output** — Final polished blog post ready to use
+
+This multi-step approach significantly reduces hallucination compared to single-agent generation.
+
+## 💡 Tips & Best Practices
+
+- Start with the interactive CLI (`python main.py`) to see the full pipeline
+- Use provided debugging helpers to inspect intermediate outputs
+- Experiment with different topics to see how the agents adapt
+- Monitor API usage in your Google Cloud Console
+
+## 📄 License
+
+MIT — See [LICENSE](LICENSE) for details.
+
